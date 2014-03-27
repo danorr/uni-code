@@ -1,24 +1,43 @@
 def pig_latinify_sentence(sentence):
     words = sentence.split(" ")
+    length = len(words)
     vowels = "aeiou"
-    for word in words:
-        if word[0] in vowels:
-            pig_latinify_word(word, vowel)
-        else:
-            pig_latinify_word(word, consonant)
-        outstring = outstring + " " + word
+    ending = ""
+    outstring = ""
+    for i in range(len(words)): # what's the point of this?
+        for word in words:
+            if word[0] in vowels or word[0].isnumeric():
+                ending = "way"
+                if outstring:
+                    outstring = outstring + " " + (word + ending)
+                else:
+                    outstring = word + ending
+            #pig_latinify_word(word, ending)
+            else:
+                ending = "ay"
+                if outstring:
+                    outstring = outstring + " " + (word[1:] + word[0].lower() + ending)
+                else:
+                    outstring = word[1:] + word[0].lower() + ending                    
+    return outstring
     
     
-def pig_latinify_word(word, string):
+def pig_latinify_word(word, ending):
     ''' Receives word and vowel or consonant and
         Returns the latinified word'''
-    consonant_ending = 'ay'
-    vowel_ending = 'way'
-    if string == vowel or word[0].isnumeric():
-        return word + vowel_ending 
+    if ending == "way":
+        build_string(word + ending)
     else:
-        out_word = word[1:] + word[0].lower() + consonant_ending
-        return out_word
+        build_string(word[1:] + word[0].lower() + ending)
+    
+    
+def build_string(word):
+    outstring = ""
+    if not outstring == "":
+        outstring = outstring + " " + word
+    else:
+        outstring = word
+    return outstring
 
    
 print(pig_latinify_sentence("Toby likes his art"))
