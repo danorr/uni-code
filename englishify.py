@@ -1,28 +1,34 @@
 def englishify_sentence(sentence):
-    ''' Takes a pig latin sentence and translates it with variations '''
+    ''' Takes a pig latin sentence and returns english translation '''
     
-    ending = ""
+    wordlist = sentence.split(" ")
+    answer = []
+    converted_word = ""
+    for word in wordlist:        
+        converted_word = englishify_word(word)
+        answer.append(converted_word)
+    return " ".join(answer)
+                  
+def englishify_word(word):
+    ''' Takes a pig latin word and translates it with variations '''
+    ending = word[-3:]
     outstring = ""
-    words = sentence.split(" ")
-    for word in words:
-        ending = word[-3:]
-        if ending == "way":
-            englishify_word(word, ending)
-            outstring += outstring + word
-            print(outstring)
-            #word1 = word.replace(ending, "")
-            #word2 = word[-3:-2] + word[:-3]
-            #print("word1:{:<10}\t word2:{:>10}".format(word1, word2))
-        else:
-            ending = "ay"
-            word3 = word[-3] + word.strip(word[-3:])
-            print("word3:{}".format(word3))
-                
-def englishify_word(word, ending):
-    word1 = word.replace(ending, "")
-    word2 = word[-3:-2] + word[:-3]
-    return "(word1 or word2)"
+    if ending == "way":      
+        word1 = word.replace(ending, "")
+        word2 = "{0}{1}".format(word[-3:-2], word[:-3])
+        outstring = "({0} or {1})".format(word1, word2)
+    else:
+        ending = "ay"
+        word3 = "{0}{1}".format(word[-3], word[:-3])
+        outstring = word3   
+    return outstring
+              
 
     
-
+english = englishify_sentence("obytay ikeslay ishay artway")
+print(english)
 print(englishify_sentence("oday ouyay antway anway eggway"))
+english = englishify_sentence("onay hankyoutay iway amway allergicway otay eggsway")
+print(english)
+english = englishify_sentence("eggceptionallyway oringbay esttay asecay")
+print(english)
